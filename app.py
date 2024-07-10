@@ -32,3 +32,16 @@ def generate(prompt, history, temperature=0.7, max_new_tokens=1024, top_p=0.90, 
         do_sample=True,
         seed=rand_seed,
     )
+
+
+formatted_prompt = format_prompt(prompt, history)
+
+    stream = client.text_generation(formatted_prompt, **generate_kwargs, stream=True, details=True, return_full_text=False)
+    output = ""
+
+    for response in stream:
+        output += response.token.text
+        yield output
+    history.append((prompt, output))
+    return output
+
