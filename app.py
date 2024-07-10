@@ -78,3 +78,28 @@ additional_inputs=[
         interactive=True,
         info="Higher values sample more low-probability tokens",
     ),
+
+
+    gr.Slider(
+        label="Repetition penalty",
+        value=1.0,
+        minimum=0.1,
+        maximum=2.0,
+        step=0.1,
+        interactive=True,
+        info="Penalize repeated tokens",
+    )
+]
+
+iface = gr.ChatInterface(fn=generate, 
+                        chatbot=mychatbot,
+						additional_inputs=additional_inputs,
+                        retry_btn=None,
+                        undo_btn=None
+                       )
+
+with gr.Blocks() as demo:
+    gr.HTML("<center><h1>My Gemma Chatbot</h1></center>")
+    iface.render()
+    
+demo.queue().launch(show_api=False)
