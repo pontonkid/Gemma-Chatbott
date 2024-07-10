@@ -45,3 +45,36 @@ formatted_prompt = format_prompt(prompt, history)
     history.append((prompt, output))
     return output
 
+
+
+mychatbot = gr.Chatbot(
+    avatar_images=["./user.png", "./botgm.png"], bubble_full_width=False, show_label=False, show_copy_button=True, likeable=True,)
+
+additional_inputs=[
+    gr.Slider(
+        label="Temperature",
+        value=0.7,
+        minimum=0.0,
+        maximum=1.0,
+        step=0.01,
+        interactive=True,
+        info="Higher values generate more diverse outputs",
+    ),
+    gr.Slider(
+        label="Max new tokens",
+        value=6400,
+        minimum=0,
+        maximum=8000,
+        step=64,
+        interactive=True,
+        info="The maximum numbers of new tokens",
+    ),
+    gr.Slider(
+        label="Top-p",
+        value=0.90,
+        minimum=0.0,
+        maximum=1,
+        step=0.01,
+        interactive=True,
+        info="Higher values sample more low-probability tokens",
+    ),
